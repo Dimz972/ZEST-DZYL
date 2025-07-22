@@ -1,0 +1,41 @@
+<h1>Votre Panier</h1>
+
+<% if (cart && cart.length > 0) { %>
+    <% let total = 0; %>
+    <% cart.forEach(function(item, index) { %>
+        <div style="border: 1px solid #ccc; margin: 10px; padding: 15px; border-radius: 5px;">
+            <h3><%= item.plat.name %></h3>
+            <p><b>Origine:</b> <%= item.plat.origin %></p>
+            <p><b>Épicé:</b> <%= item.plat.isSpicy ? 'Oui' : 'Non' %></p>
+            <p><b>Végétarien:</b> <%= item.plat.isVegetarian ? 'Oui' : 'Non' %></p>
+            <p><b>Ingrédients:</b> <%= item.plat.ingredients.join(', ') %></p>
+            <img src="<%= item.plat.image %>" alt="<%= item.plat.name %>" style="width: 150px; height: auto;">
+            <p><b>Description:</b> <%= item.plat.description %></p>
+            <p><b>Prix unitaire:</b> <%= item.plat.price %> €</p>
+            <p><b>Quantité:</b> <%= item.quantity %></p>
+            <p><b>Sous-total:</b> <%= (item.plat.price * item.quantity).toFixed(2) %> €</p>
+            <% total += item.plat.price * item.quantity; %>
+            <form action="/panier/delete/<%= item.plat._id %>" method="POST" style="margin-top:10px;">
+                <input type="hidden" name="platId" value="<%= item.plat._id %>">
+                <% if (typeof csrfToken !== 'undefined') { %>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <% } %>
+                <button type="submit" style="background-color: #dc3545; color: white; padding: 7px 15px; border: none; border-radius: 5px; cursor: pointer;">
+                    Supprimer ce menu
+                </button>
+            </form>
+        </div>
+    <% }); %>
+    
+    <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+        <h2><b>Total du panier: <%= total.toFixed(2) %> €</b></h2>
+    </div>
+    
+    <div style="margin-top: 20px;">
+        <a href="/commande" style="background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Passer commande</a>
+        <a href="/plats" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-left: 10px;">Continuer mes achats</a>
+    </div>
+<% } else { %>
+    <p>Votre panier est vide.</p>
+    <a href="/plats" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Voir nos plats</a>
+<% } %>

@@ -1,0 +1,80 @@
+
+    <div class="form-container">
+        <h2>Formulaire d'Inscription Utilisateur</h2>
+        
+        <form action="/users/add" method="POST" id="userForm">
+            <div class="form-group">
+                <label for="fname">Prénom <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="fname" 
+                    name="fname" 
+                    required 
+                    placeholder="Entrez votre prénom"
+                    value="<%= typeof user !== 'undefined' ? user.fname : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="lname">Nom de famille <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="lname" 
+                    name="lname" 
+                    required 
+                    placeholder="Entrez votre nom de famille"
+                    value="<%= typeof user !== 'undefined' ? user.lname : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="exemple@email.com"
+                    value="<%= typeof user !== 'undefined' ? user.email : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">Numéro de téléphone <span class="required">*</span></label>
+                <input 
+                    type="tel" 
+                    id="phone_number" 
+                    name="phone_number" 
+                    required 
+                    placeholder="0123456789"
+                    pattern="[0-9]{10}"
+                    value="<%= typeof user !== 'undefined' ? user.phone_number : '' %>"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="adresse">Adresse <span class="required">*</span></label>
+                <textarea 
+                    type="text" 
+                    id="adresse" 
+                    name="adresse" 
+                    required 
+                    placeholder="Entrez votre adresse complète"
+                    rows="3"
+                ><%= typeof user !== 'undefined' ? user.adresse : '' %></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe <span class="required">*</span></label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    placeholder="Entrez votre mot de passe"
+                    value="<%= typeof user !== 'undefined' ? user.password : '' %>"
+                >
+
+            <button type="submit">Créer le compte</button>
+        </form>
+    </div>

@@ -1,0 +1,35 @@
+
+
+
+    <h1>Bienvenue sur votre profil <%= user.fname %> !</h1>
+    <p>Voici votre profil en détails :</p>
+    <p><b>Nom:</b> <%= user.lname %></p>
+    <p><b>Adresse:</b> <%= user.adresse %></p>
+    <p><b>Email:</b> <%= user.email %></p>
+    <p><b>Numéro de téléphone:</b> <%= user.phone_number %></p>
+    <form action="/logout" method="GET" style="display: inline;">
+        <button type="submit">Se déconnecter</button>
+    </form>
+
+    <form action="/users/update/<%= user._id %>" method="POST">
+           <label for="fname">Prénom:</label>
+           <input type="text" id="fname" name="fname" value="<%= user.fname %>" required>
+           <label for="lname">Nom:</label>
+           <input type="text" id="lname" name="lname" value="<%= user.lname %>" required>
+           <label for="email">Email:</label>
+           <input type="email" id="email" name="email" value="<%= user.email %>" required>
+           <label for="phone">Téléphone:</label>
+           <input type="text" id="phone" name="phone_number" value="<%= user.phone_number %>">
+           <label for="adresse">Adresse:</label>
+           <input type="text" id="adresse" name="adresse" value="<%= user.adresse %>">
+           <label for="password">Mot de passe:</label>
+           <input type="text" id="password" name="password" value="<%= user.password %>">
+           <input type="hidden" name="_method" value="PUT">
+           <button type="submit">Mettre à jour</button>
+     </form>
+     
+     <form action="/users/delete/<%= user._id %>?_method=DELETE" method="POST">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <button type="submit">Supprimer</button>
+    </form>
+

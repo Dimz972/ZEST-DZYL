@@ -1,0 +1,12 @@
+
+    <h1>Détails du plat</h1>
+    <p><b>Nom du plat:</b> <%= plat.name %></p>
+    <p><b>Origine:</b> <%= plat.origin %></p>
+    <p><b>Épicé:</b> <%= plat.isSpicy ? 'Oui' : 'Non' %></p>
+    <p><b>Végétarien:</b> <%= plat.isVegetarian ? 'Oui' : 'Non' %></p>
+    <p><b>Ingrédients:</b> <%= plat.ingredients.join(', ') %></p>
+    <img src="<%= plat.image %>" alt="<%= plat.name %>" style="width: 200px; height: auto;">
+    <p><b>Description:</b> <%= plat.description %></p>
+    <p><b>Prix:</b> <%= plat.price %> €</p>
+    <a href="/plats">Retour à la liste des plats</a>
+

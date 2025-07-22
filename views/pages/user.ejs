@@ -1,0 +1,15 @@
+<h1 >Liste des Utilisateurs</h1>
+<!-- Affichage de la liste des utilisateurs via userController -->
+
+<% users.forEach(user => { %>
+    <div>
+        <h2><%= user.fname %> <%= user.lname %></h2>
+        <p>Email: <%= user.email %></p>
+        <p>Adresse: <%= user.adresse %></p>
+        <p>Numéro de téléphone: <%= user.phone_number %></p>
+        <p>Mot de passe: <%= user.password %></p>
+      
+
+        
+    </div>
+<% }) %>

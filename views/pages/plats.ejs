@@ -1,0 +1,25 @@
+<h1>Page Menu</h1>
+<!-- Affichage de la liste des plats via platController-->
+
+<% plats.forEach(plat => { %>
+    <div>
+        <h2><%= plat.name %></h2>
+        <p>Description: <%= plat.description %></p>
+        <p>Origine: <%= plat.origin %></p>
+        <p>Épicé: <%= plat.isSpicy ? 'Oui' : 'Non' %></p>
+        <p>Végétarien: <%= plat.isVegetarian ? 'Oui' : 'Non' %></p>
+        <p>Ingrédients: <%= plat.ingredients.join(', ') %></p>
+        <p>Prix: <%= plat.price %> €</p>
+        <img src="<%= plat.image %>" alt="<%= plat.name %>" style="height: 200px; ;width: 200px; height: auto;">
+        <button onclick="window.location.href='/plats/<%= plat._id %>'">Voir les détails</button>
+        <form action="/plats/<%= plat._id %>/add-to-cart" method="POST">
+            <button type="submit">Ajouter au panier</button>
+        </form>
+    </div>  
+<% }) %>
+
+
+
+
+
+ 

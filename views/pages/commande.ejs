@@ -1,0 +1,61 @@
+
+    <h1>Page de Commande</h1>
+
+    <% if (cart && cart.length > 0) { %>
+        <h2>Résumé de votre commande</h2>
+        <div style="margin: 20px 0;">
+            <% let total = 0; %>
+            <% cart.forEach(function(item) { %>
+                <div style="border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
+                    <h4><%= item.plat.name %></h4>
+                    <p><b>Origine:</b> <%= item.plat.origin %></p>
+                    <p><b>Prix unitaire:</b> <%= item.plat.price %> €</p>
+                    <p><b>Quantité:</b> <%= item.quantity %></p>
+                    <p><b>Sous-total:</b> <%= (item.plat.price * item.quantity).toFixed(2) %> €</p>
+                    <% total += item.plat.price * item.quantity; %>
+                </div>
+            <% }); %>
+        </div>
+        <div style="margin-top: 20px; padding: 15px; background-color: #e9f7ef; border-radius: 5px; border: 2px solid #27ae60;">
+            <h2><b>Total de la commande: <%= total.toFixed(2) %> €</b></h2>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h3>Finaliser votre commande</h3>
+            <form action="/commande/confirm" method="POST" style="margin: 20px 0;">
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Choix du mode de livraison:</label>
+                    <select name="deliveryMethod" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc;">
+                        <option value="delivery">Livraison à domicile</option>
+                        <option value="pickup">À emporter au restaurant</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Vos informations:</label>
+                    <input type="text" name="name" placeholder="Nom complet" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px;"
+                        value="<%= user && user.fname ? user.fname : '' %>">
+                    <input type="text" name="address" placeholder="Adresse de livraison" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px;"
+                        value="<%= user && user.adresse ? user.adresse : '' %>">
+                    <input type="tel" name="phone" placeholder="Numéro de téléphone" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px;"
+                        value="<%= user && user.phone_number ? user.phone_number : '' %>">
+                    <textarea name="notes" placeholder="Instructions spéciales (optionnel)" style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc; min-height: 60px;"></textarea>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p style="margin-bottom: 15px;">Assurez-vous que toutes les informations sont correctes avant de finaliser votre commande.</p>
+                    <button type="submit" style="background-color: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                        Paiement sécurisé
+                    </button>
+                </div>
+            </form>
+        </div>
+    <% } else { %>
+        <p>Votre panier est vide. <a href="/plats">Voir nos plats</a></p>
+    <% } %>
+
+    <div style="margin-top: 30px;">
+        <a href="/panier" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">Retour au panier</a>
+        <a href="/plats" style="background-color: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Continuer mes achats</a>
+    </div>

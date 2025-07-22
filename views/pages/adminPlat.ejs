@@ -1,0 +1,102 @@
+
+
+<h1>Liste Plats - Admin</h1>
+
+
+<% plats.forEach(plat => { %>
+    <div>
+        <h2><%= plat.name %></h2>
+        <p>Description: <%= plat.description %></p>
+        <p>Origine: <%= plat.origin %></p>
+        <p>Épicé: <%= plat.isSpicy ? 'Oui' : 'Non' %></p>
+        <p>Végétarien: <%= plat.isVegetarian ? 'Oui' : 'Non' %></p>
+        <p>Ingrédients: <%= plat.ingredients.join(', ') %></p>
+        <p>Prix: <%= plat.price %> €</p>
+        <img src="<%= plat.image %>" alt="<%= plat.name %>" style="width: 200px; height: auto;">
+        <form action="/plats/delete/<%= plat._id %>?_method=DELETE" method="POST">
+            <input type="hidden" name="platId" value="<%= plat._id %>">
+            <button type="submit">Supprimer</button>
+        </form>
+
+        <form action="/plats/update/<%= plat._id %>" method="POST" enctype="multipart/form-data">
+           <label for="name">Nom:</label>
+           <input type="text" id="name" name="name" value="<%= plat.name %>" required>
+           <label for="description">Description:</label>
+           <textarea id="description" name="description" required><%= plat.description %></textarea>
+           <label for="origin">Origine:</label>
+           <select id="origin" name="origin" required>
+               <option value="">Sélectionnez l'origine</option>
+               <option value="Martinique" <%= plat.origin === 'Martinique' ? 'selected' : '' %>>Martinique</option>
+               <option value="Guadeloupe" <%= plat.origin === 'Guadeloupe' ? 'selected' : '' %>>Guadeloupe</option>
+               <option value="Réunion" <%= plat.origin === 'Réunion' ? 'selected' : '' %>>Réunion</option>
+               <option value="Haïti" <%= plat.origin === 'Haïti' ? 'selected' : '' %>>Haïti</option>
+               <option value="Mexicaine" <%= plat.origin === 'Mexicaine' ? 'selected' : '' %>>Mexicaine</option>
+               <option value="Autre" <%= plat.origin === 'Autre' ? 'selected' : '' %>>Autre</option>
+           </select>
+           <label for="isSpicy">Épicé:</label>
+           <input type="checkbox" id="isSpicy" name="isSpicy" <%= plat.isSpicy ? 'checked' : '' %>>
+           <label for="isVegetarian">Végétarien:</label>
+           <input type="checkbox" id="isVegetarian" name="isVegetarian" <%= plat.isVegetarian ? 'checked' : '' %>><br>
+           <label for="ingredients">Ingrédients:</label>
+           <div class="ingredients-container">
+               <% plat.ingredients.forEach((ingredient, index) => { %>
+                   <input type="text" name="ingredients[]" value="<%= ingredient %>" required>
+               <% }) %>
+               <button type="button" onclick="addIngredientField(this)">Ajouter un ingrédient</button>
+           </div>
+
+        <!-- Création d'un bouton pour supprimer un input d'ingrédient -->
+        <script>
+            document.querySelectorAll('.ingredients-container input[type="text"]').forEach(function(input) {
+                if (!input.nextSibling || !input.nextSibling.classList || !input.nextSibling.classList.contains('remove-ingredient-btn')) {
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.textContent = 'Supprimer';
+                    removeBtn.className = 'remove-ingredient-btn';
+                    removeBtn.onclick = function() {
+                        input.parentElement.removeChild(input);
+                        removeBtn.parentElement.removeChild(removeBtn);
+                    };
+                    input.parentElement.insertBefore(removeBtn, input.nextSibling);
+                }
+            });
+        </script>
+
+        <!-- Fonction pour ajouter un ingrédient via le bouton "Ajouter un ingrédient"-->
+        <script>
+            function addIngredientField(self) {
+                 const input = document.createElement('input');
+                 const container = self.parentElement;
+                 console.log(container);
+                 input.type = 'text';
+                 input.name = 'ingredients[]';
+                 input.required = true;
+                container.insertBefore(input, self);
+                console.log(input.parentElement);
+
+                 
+                const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.textContent = 'Supprimer';
+                    removeBtn.className = 'remove-ingredient-btn';
+                    removeBtn.onclick = function() {
+                        container.removeChild(input);
+                        container.removeChild(removeBtn);
+                    };
+                    input.parentElement.insertBefore(removeBtn, input.nextSibling);
+                
+                
+            }
+        </script>
+
+           <label for="price">Prix:</label>
+           <input type="number" name="price" value="<%= plat.price %>" step="0.01" required>
+        <label for="image">Image:</label>
+        <input type="file" name="image" accept="image/*">    
+        <input type="hidden" name="_method" value="PUT">
+           <button type="submit">Mettre à jour</button>
+        </form>
+    </div>  
+<% }) %>
+
+
